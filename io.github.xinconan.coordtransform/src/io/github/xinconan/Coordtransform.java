@@ -75,25 +75,25 @@ public class Coordtransform {
 	
 	/**
 	 * GCJ02转WGS84
-	 * @param wgs_lon
-	 * @param wgs_lat
+	 * @param gcj_lon
+	 * @param gcj_lat
 	 * @return Double[lon,lat]
 	 */
-	public static Double[] CGJ02ToWGS84(Double cgj_lon,Double cgj_lat){
-		if(outOfChina(cgj_lon, cgj_lat)){
-			return new Double[]{cgj_lon,cgj_lat};
+	public static Double[] GCJ02ToWGS84(Double gcj_lon,Double gcj_lat){
+		if(outOfChina(gcj_lon, gcj_lat)){
+			return new Double[]{gcj_lon,gcj_lat};
 		}
-		double dlat = transformlat(cgj_lon - 105.0, cgj_lat - 35.0);
-		double dlng = transformlng(cgj_lon - 105.0, cgj_lat - 35.0);
-		double radlat = cgj_lat / 180.0 * PI;
+		double dlat = transformlat(gcj_lon - 105.0, gcj_lat - 35.0);
+		double dlng = transformlng(gcj_lon - 105.0, gcj_lat - 35.0);
+		double radlat = gcj_lat / 180.0 * PI;
 		double magic = Math.sin(radlat);
         magic = 1 - ee * magic * magic;
         double sqrtmagic = Math.sqrt(magic);
         dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);
         dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);
-        double mglat = cgj_lat + dlat;
-        double mglng = cgj_lon + dlng;
-        return new Double[]{cgj_lon * 2 - mglng, cgj_lat * 2 - mglat};
+        double mglat = gcj_lat + dlat;
+        double mglng = gcj_lon + dlng;
+        return new Double[]{gcj_lon * 2 - mglng, gcj_lat * 2 - mglat};
 	}
 	
 	private static Double transformlat(double lng, double lat) {
